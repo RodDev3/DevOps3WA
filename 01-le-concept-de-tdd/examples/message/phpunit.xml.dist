@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.5/phpunit.xsd"
-         bootstrap="tests/bootstrap.php"
-         cacheDirectory=".phpunit.cache"
-         executionOrder="depends,defects"
-         requireCoverageMetadata="true"
-         beStrictAboutCoverageMetadata="true"
-         beStrictAboutOutputDuringTests="true"
-         failOnRisky="true"
-         failOnWarning="true">
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.5/phpunit.xsd" bootstrap="tests/bootstrap.php" cacheDirectory=".phpunit.cache" executionOrder="depends,defects" requireCoverageMetadata="true" beStrictAboutCoverageMetadata="true" beStrictAboutOutputDuringTests="true" failOnRisky="true" failOnWarning="true">
+    <php>
+        <!-- ... autres configurations ... -->
+        <env name="SYMFONY_DOTENV_FILE" value=".env" />
+    </php>
     <testsuites>
         <testsuite name="Message">
             <directory>./tests</directory>
         </testsuite>
     </testsuites>
+    <source>
+        <include>
+            <directory>src</directory>
+        </include>
+    </source>
 </phpunit>

@@ -1,14 +1,14 @@
 <?php
-
 use App\ModelPrepare;
 use App\User;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes;
+use Symfony\Component\Yaml\Parser;
 
 
 #[Attributes\CoversClass(User::class)]
 #[Attributes\CoversClass(ModelPrepare::class)]
-class UserPrepareTest extends TestCase
+class UserYamlTest extends TestCase
 {
     public function setUp(): void
     {
@@ -26,17 +26,20 @@ class UserPrepareTest extends TestCase
       "
         );
 
+        $yaml = new Parser();
         $users = [
             ['username' => 'Alan', 'createdAt' => date("Y-m-d H:i:s", strtotime('2024-01-15 00:00:00'))],
             ['username' => 'Sophie', 'createdAt' => date("Y-m-d H:i:s", strtotime('2024-01-15 00:00:00'))],
             ['username' => 'Bernard', 'createdAt' => date("Y-m-d H:i:s", strtotime('2024-01-15 00:00:00'))],
         ];
+        $users = $yaml->parse(file_get_contents(__DIR__.'/_data/seed.yml'));
 
         $this->model = new App\ModelPrepare($this->pdo);
-        $this->model->hydrate($users);
+        $this->model->hydrate($users['users']);
     }
 
-    public function testUsersCount(){
+    public function testUsersCount()
+    {
         $this->assertCount(3, $this->model->all());
     }
 
@@ -63,7 +66,7 @@ class UserPrepareTest extends TestCase
 
         $this->model->save($user);
         $userToFind = $this->model->find(4);
-        $this->assertEquals('Test4',$userToFind->__get('username'));
+        $this->assertEquals('Test4', $userToFind->__get('username'));
 
         //$this->assertCount(4, $this->model->all());
     }

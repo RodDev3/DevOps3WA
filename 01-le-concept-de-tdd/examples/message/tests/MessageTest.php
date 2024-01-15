@@ -12,11 +12,18 @@ class MessageTest extends TestCase
 
     public function setUp(): void
     {
-        $this->message = new Message('en');
+        $this->message = new Message($_ENV["LANGUAGE"]);
     }
 
     public function testOne()
     {
-        $this->assertSame("Hello World!", $this->message->get());
+        if ($_ENV["LANGUAGE"] == "fr"){
+            $this->assertSame("Bonjour les gens!", $this->message->get());
+
+        } else if($_ENV["LANGUAGE"] == "en") {
+            $this->assertSame("Hello World!", $this->message->get());
+        } else {
+            $this->fail("Problème");
+        }
     }
 }
